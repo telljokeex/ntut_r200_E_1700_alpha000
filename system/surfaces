@@ -1,0 +1,114 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+
+
+surfaces
+{
+    	
+	type            surfaces;
+	libs            ("libsampling.so");
+
+	writeControl    writeTime;
+
+	fields   (U p k);
+	surfaceFormat   ensight;
+	interpolationScheme cellPoint;  
+
+    surfaces
+    (
+	    y-400
+      {
+	      type            cuttingPlane;
+	      planeType       pointAndNormal;
+	      interpolate 		true;
+	      pointAndNormalDict
+	        {
+            point       (0  -40 0);
+            normal      (0    1 0);
+          }
+	    }
+      z015
+      {
+	      type            cuttingPlane;
+	      planeType       pointAndNormal;
+	      interpolate 		true;
+        pointAndNormalDict
+	        {            
+            point       (0 0 1.5);
+            normal      (0 0 1);
+          }
+	    }
+      y_lidar1
+      {
+	      type            cuttingPlane;
+	      planeType       pointAndNormal;
+	      interpolate 		true;
+	      pointAndNormalDict
+	        {            
+            point       (0 20 0);
+            normal      (0 1 0);
+          }
+	    }
+	    y_lidar2
+      {
+	      type            cuttingPlane;
+	      planeType       pointAndNormal;
+	      interpolate 		true;
+	      pointAndNormalDict
+	        {            
+            point       (0  -92 0);
+            normal      (0    1 0);
+          }
+	    }
+      lidar_plane
+      {
+	      type            cuttingPlane;
+	      planeType       pointAndNormal;
+	      interpolate 		true;
+        pointAndNormalDict
+	        {            
+            point       (-132 20 0);
+            normal      (-0.358 -0.934 0);
+          }
+	    }
+      inflow
+      {
+	      type            cuttingPlane;
+	      planeType       pointAndNormal;
+	      interpolate 		true;
+        pointAndNormalDict
+	        {            
+            point       (1850 0 0);
+            normal      (1 0 0);
+          }
+	    }
+      outflow
+      {
+	      type            cuttingPlane;
+	      planeType       pointAndNormal;
+	      interpolate 		true;
+        pointAndNormalDict
+	        {            
+            point       (200 0 0);
+            normal      (1 0 0);
+          }
+	    }
+	  );	
+
+		formatOptions
+      {
+       ensight
+       {
+                // Write single mesh file
+                // (only for static surfaces)
+                collateTimes true;
+        }
+      }
+}
+
+// ************************************************************************* //

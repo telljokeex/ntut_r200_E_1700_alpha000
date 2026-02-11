@@ -1,0 +1,23 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+
+#include	"ABLConditions"
+
+
+
+
+ustar		#calc	" $kappa * $Uref / log( ( $Zref + $z0org ) / $z0org ) "; 
+
+
+
+kInlet #calc " pow( $ustar , 2 )  / sqrt( $Cmu ) ";
+
+epsilonInlet #calc " pow( $ustar , 3 )  / ($Zref + $z0org - $zGroundorg) / $kappa ";
+
+omegaInlet #calc " $ustar / $kappa / sqrt( $Cmu ) / ($Zref + $z0org - $zGroundorg) ";
+

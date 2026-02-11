@@ -1,0 +1,11 @@
+yPlus
+	{
+	type            yPlus;
+  libs            ("libfieldFunctionObjects.so");
+	patches (wall);
+	writeControl timeStep;
+	writeInterval 500;
+	writeToFile true;
+	executeControl timeStep;
+	executeInterval 500;
+	}	

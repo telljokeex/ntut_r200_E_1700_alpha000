@@ -1,0 +1,81 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+#include "../../windDirection"
+
+z0org		2.20;
+zGroundorg 	0.0;
+
+Uref		10;
+Zref		200;
+zDir		(0 0 1);
+
+
+
+#ifeq $windDirection N
+		flowDir	(	0.0000 	-1.0000 	0	);  
+#endif		
+#ifeq $windDirection NNE
+		flowDir	(	-0.3827 	-0.9239 	0	);
+#endif  
+#ifeq $windDirection NE
+		flowDir	(	-0.7071 	-0.7071 	0	);
+#endif   
+#ifeq $windDirection ENE  
+		flowDir	(	-0.9239 	-0.3827 	0	);
+#endif
+#ifeq $windDirection E    
+		flowDir	(	-1.0000 	0.0000 	0	);
+#endif
+#ifeq $windDirection ESE  
+		flowDir	(	-0.9239 	0.3827 	0	);
+#endif
+#ifeq $windDirection SE   
+		flowDir	(	-0.7071 	0.7071 	0	);
+#endif
+#ifeq $windDirection SSE  
+		flowDir	(	-0.3827 	0.9239 	0	);
+#endif
+#ifeq $windDirection S    
+		flowDir	(	0.0000 	1.0000 	0	);
+#endif
+#ifeq $windDirection SSW  
+		flowDir	(	0.3827 	0.9239 	0	);
+#endif
+#ifeq $windDirection SW   
+		flowDir	(	0.7071 	0.7071 	0	);
+#endif
+#ifeq $windDirection WSW  
+		flowDir	(	0.9239 	0.3827 	0	);
+#endif
+#ifeq $windDirection W    
+		flowDir	(	1.0000 	0.0000 	0	);
+#endif
+#ifeq $windDirection WNW  
+		flowDir	(	0.9239 	-0.3827 	0	);
+#endif
+#ifeq $windDirection NW   
+		flowDir	(	0.7071 	-0.7071 	0	);
+#endif
+#ifeq $windDirection NNW  
+		flowDir	(	0.3827 	-0.9239 	0	);
+#endif
+
+
+z0                   uniform $z0org;
+zGround              uniform $zGroundorg;
+d              uniform $zGroundorg;
+
+kappa           0.41;
+Cmu             0.09;
+phi             phi;
+C1              0.0;
+C2              1.0;
+E               9.8;
+
+
+// ************************************************************************* //

@@ -1,0 +1,177 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+angle 59;  /* means non-orthogonality of checkMesh */
+
+ddtSchemes
+{
+    #ifeq ${FOAM_APPLICATION} simpleFoam 
+        default         steadyState;
+    #else    
+    		default         Euler;
+    #endif		
+}
+
+gradSchemes
+{
+	#if $angle >85
+		default         cellLimited Gauss linear 0.5;    
+    grad(U)         faceLimited Gauss linear 1.0;    
+	#endif
+	
+	#if 70 <= $angle <85
+		default         cellLimited Gauss linear 0.5;    
+    grad(U)         cellLimited Gauss linear 1.0; 
+	#endif
+		
+	#if 60 <= $angle <70 
+    default         cellMDLimited Gauss linear 0.5;    
+    grad(U)         cellMDLimited Gauss linear 0.5; 
+  #endif 
+   
+  #if 40 <= $angle < 60 
+  	default         cellMDLimited Gauss linear 0;    
+    grad(U)         cellMDLimited Gauss linear 0.333; 
+  #endif 
+  
+  #if $angle < 40 
+  	default         Gauss linear;
+
+    limited         cellLimited Gauss linear 1;
+    grad(U)         $limited;
+    grad(k)         $limited;
+    grad(epsilon)     $limited;
+  #endif 
+
+    
+}
+
+divSchemes
+{
+  #if $angle >85
+		div(phi,U)      Gauss linearUpwind grad(U);  
+    div(phi,k)      Gauss linearUpwind default;
+    div(phi,epsilon)  Gauss linearUpwind default;
+    div(phi,omega)  Gauss linearUpwind default;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+	#endif
+	
+	#if 70 <= $angle <85
+		div(phi,U)      Gauss linearUpwind grad(U);  
+    div(phi,k)      Gauss linearUpwind default;
+    div(phi,epsilon)  Gauss linearUpwind default;
+    div(phi,omega)  Gauss linearUpwind default;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+	#endif
+		
+	#if 60 <= $angle <70 
+    div(phi,U)      Gauss linearUpwind grad(U);  
+    div(phi,k)      Gauss linearUpwind default;
+    div(phi,epsilon)  Gauss linearUpwind default;
+    div(phi,omega)  Gauss linearUpwind default;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+  #endif 
+   
+  #if 40 <= $angle < 60 
+  	div(phi,U)      Gauss linearUpwind grad(U);  
+    div(phi,k)      Gauss linearUpwind default;
+    div(phi,epsilon)  Gauss linearUpwind default;
+    div(phi,omega)  Gauss linearUpwind default;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;  	
+  #endif 
+  
+  #if 20 <= $angle < 40 
+  	div(phi,U)      bounded Gauss linearUpwind limited;  
+    div(phi,k)      bounded Gauss upwind;
+    div(phi,epsilon)  bounded Gauss upwind;
+    div(phi,omega)  bounded Gauss upwind;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;     	
+  #endif      
+  
+  #if $angle < 20 
+  	div(phi,U)      Gauss LUST grad(U);
+    div(phi,k)      Gauss LUST grad(k);
+    div(phi,epsilon)  Gauss LUST grad(epsilon);
+    div(phi,omega)  Gauss LUST grad(omega);
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;    	
+  #endif    
+}
+
+laplacianSchemes
+{
+	#if $angle >85
+		default         Gauss linear limited 0.333;
+	#endif
+	
+	#if 70 <= $angle <85
+		default         Gauss linear limited 0.5;
+	#endif
+		
+	#if 60 <= $angle <70 
+    default         Gauss linear limited 0.777;
+  #endif 
+   
+  #if 40 <= $angle < 60 
+  	default         Gauss linear corrected;
+  #endif 
+  
+  #if $angle < 40 
+  	default         Gauss linear orthogonal;
+  #endif 
+}
+
+interpolationSchemes
+{
+    default         linear;
+  
+    
+}
+
+snGradSchemes
+{
+  #if $angle >85
+		default         limited 0.333;
+	#endif
+	
+	#if 70 <= $angle <85
+		default         limited 0.5;
+	#endif
+		
+	#if 60 <= $angle <70 
+    default         limited 0.777;
+  #endif 
+   
+  #if 40 <= $angle < 60 
+  	default         limited 1.0;
+  #endif 
+  
+  #if 20<= $angle < 40 
+  	default         corrected;
+  #endif 
+  
+  #if $angle < 20 
+  	default         orthogonal;
+  #endif 
+    
+    
+}
+
+wallDist
+{
+    method meshWave;
+}
+
+// ************************************************************************* //

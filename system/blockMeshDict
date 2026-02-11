@@ -1,0 +1,463 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM The Open Source CFD Toolbox
+   \\    /   O peration     | Website  https//openfoam.org
+    \\  /    A nd           | Version  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+		scale 1;   
+
+//************Basic Information****************//
+#include "../windDirection"
+
+
+#ifeq $windDirection N
+		N_boundary "inlet_N";
+    W_boundary "side_W";
+    S_boundary "outlet_S";
+    E_boundary "side_E";
+#endif		
+#ifeq $windDirection NNE
+		N_boundary "inlet_N";
+    W_boundary "outlet_W";
+    S_boundary "outlet_S";
+    E_boundary "inlet_E";
+#endif  
+#ifeq $windDirection NE
+		N_boundary "inlet_N";
+    W_boundary "outlet_W";
+    S_boundary "outlet_S";
+    E_boundary "inlet_E";
+#endif   
+#ifeq $windDirection ENE  
+		N_boundary "inlet_N";
+    W_boundary "outlet_W";
+    S_boundary "outlet_S";
+    E_boundary "inlet_E";
+#endif
+#ifeq $windDirection E    
+		N_boundary "side_N";
+    W_boundary "outlet_W";
+    S_boundary "side_S";
+    E_boundary "inlet_E";
+#endif
+#ifeq $windDirection ESE  
+		N_boundary "outlet_N";
+    W_boundary "outlet_W";
+    S_boundary "inlet_S";
+    E_boundary "inlet_E";
+#endif
+#ifeq $windDirection SE   
+		N_boundary "outlet_N";
+    W_boundary "outlet_W";
+    S_boundary "inlet_S";
+    E_boundary "inlet_E";
+#endif
+#ifeq $windDirection SSE  
+		N_boundary "outlet_N";
+    W_boundary "outlet_W";
+    S_boundary "inlet_S";
+    E_boundary "inlet_E";
+#endif
+#ifeq $windDirection S    
+		N_boundary "outlet_N";
+    W_boundary "side_W";
+    S_boundary "inlet_S";
+    E_boundary "side_E";
+#endif
+#ifeq $windDirection SSW  
+		N_boundary "outlet_N";
+    W_boundary "inlet_W";
+    S_boundary "inlet_S";
+    E_boundary "outlet_E";
+#endif
+#ifeq $windDirection SW   
+		N_boundary "outlet_N";
+    W_boundary "inlet_W";
+    S_boundary "inlet_S";
+    E_boundary "outlet_E";
+#endif
+#ifeq $windDirection WSW  
+		N_boundary "outlet_N";
+    W_boundary "inlet_W";
+    S_boundary "inlet_S";
+    E_boundary "outlet_E";
+#endif
+#ifeq $windDirection W    
+		N_boundary "side_N";
+    W_boundary "inlet_W";
+    S_boundary "side_S";
+    E_boundary "outlet_E";
+#endif
+#ifeq $windDirection WNW  
+		N_boundary "inlet_N";
+    W_boundary "inlet_W";
+    S_boundary "outlet_S";
+    E_boundary "outlet_E";
+#endif
+#ifeq $windDirection NW   
+		N_boundary "inlet_N";
+    W_boundary "inlet_W";
+    S_boundary "outlet_S";
+    E_boundary "outlet_E";
+#endif
+#ifeq $windDirection NNW  
+		N_boundary "inlet_N";
+    W_boundary "inlet_W";
+    S_boundary "outlet_S";
+    E_boundary "outlet_E";
+#endif
+		addDistance 500;
+
+    
+    x2  -250.; 
+    x3  1760.;
+    
+    x1 #calc " $x2 - $addDistance ";
+    x4 #calc " $x3 + $addDistance ";   
+            
+    
+    y2	-250.;
+    y3	 250.;
+    
+    y1 #calc " $y2 - $addDistance ";
+    y4 #calc " $y3 + $addDistance "; 
+    
+    
+    zMin	   0.;
+    zH		 140.;
+    zMax	 600.;           
+    
+    maxDelta   50.;
+    
+    globalRatio	0.2;
+    pedRatio	0.2;	
+    
+       
+    minDelta   #calc " $maxDelta * $globalRatio ";    
+    pedDelta   #calc " $minDelta * $pedRatio "; 
+    
+    
+     
+       
+//********* Calculate delta length and cells**********//   
+
+    Lx1  #calc "$x2 - $x1";
+    Lx2  #calc "$x3 - $x2";
+    Lx3  #calc "$x4 - $x3";
+    
+    Ly    #calc "$y4 - $y1";    
+    Ly1   #calc "$y2 - $y1";
+    Ly2   #calc "$y3 - $y2";
+    Ly3   #calc "$y4 - $y3";
+    
+    Lz   #calc " $zMax - $zMin ";
+      	
+    Lz1  #calc " $zH - $zMin ";
+    Lz2  #calc " $zMax - $zH ";
+            
+    
+    
+    bataX1  #calc " 1 + ( $minDelta - $maxDelta ) / $Lx1 " ;
+    bataX3  #calc " 1 + ( $minDelta - $maxDelta ) / $Lx3 " ;
+    
+    bataY1  #calc " 1 + ( $minDelta - $maxDelta ) / $Ly1 " ;
+    bataY3  #calc " 1 + ( $minDelta - $maxDelta ) / $Ly3 " ;
+    
+//    bataZ1  #calc " 1 + float( $pedDelta - $minDelta ) / $Lz1 " ;
+    bataZ2  #calc " 1 + ( $minDelta - $maxDelta ) / $Lz2 " ;
+        
+    x1Cells  #calc "round( 1 + log( $globalRatio ) / log( $bataX1 ) )";
+    x2Cells  #calc "round($Lx2 / $minDelta)";
+    x3Cells  #calc "round( 1 + log( $globalRatio ) / log( $bataX3 ) )";
+    
+    y1Cells  #calc "round( 1 + log( $globalRatio ) / log( $bataY1 ) )";
+    y2Cells  #calc "round( $Ly2 / $minDelta)";    
+    y3Cells  #calc "round( 1 + log( $globalRatio ) / log( $bataY3 ) )";
+    
+     
+    z1Cells  #calc "round( $Lz1 / $minDelta )"; /*uniform*/
+//		z1Cells  #calc "round( 1 + log( $pedRatio ) / log( $bataZ1 ) )";
+    z2Cells  #calc "round( 1 + log( $globalRatio ) / log( $bataZ2 ) )";    
+      
+    
+    yCells   #calc " round($y1Cells + $y2Cells + $y3Cells) ";
+    zCells   #calc " round($z1Cells + $z2Cells) ";
+    
+//*********************************************//    
+    
+
+//******* x-division*************
+		x1Ratio		$globalRatio;
+		x2Ratio		1.;
+		x3Ratio		#calc " 1 / $globalRatio ";
+//******* y-division*************   
+    y1Ratio		$globalRatio;
+    y2Ratio		1.;
+    y3Ratio   #calc " 1 / $globalRatio ";
+    
+    yLratio1 #calc " float( $Ly1 ) / float( $Ly ) ";
+    yLratio2 #calc " float( $Ly2 ) / float( $Ly ) ";
+    yLratio3 #calc " float( $Ly3 ) / float( $Ly ) ";
+    
+    
+    y1lineP	#calc " float( $y1Cells )/ float( $yCells ) ";    
+    y2lineP	#calc " float( $y2Cells )/ float( $yCells ) ";
+    y3lineP	#calc " float( $y3Cells )/ float( $yCells ) ";
+                        
+    divy1 		($yLratio1 $y1lineP $y1Ratio);
+    divy2 		($yLratio2 $y2lineP $y2Ratio);
+    divy3 		($yLratio3 $y3lineP $y3Ratio);
+    
+//******* z-division*************     
+    
+//    z1Ratio   #calc " 1 / $pedRatio ";
+		z1Ratio   1 ;
+    z2Ratio   #calc " 1 / $globalRatio ";
+    
+    z1Lratio #calc " float($Lz1) / float( $Lz ) " ;    
+    z2Lratio #calc " float($Lz2) / float( $Lz ) " ;
+    
+    
+    z1lineP	#calc " float( $z1Cells )/ float( $zCells ) ";    
+    z2lineP	#calc " float( $z2Cells )/ float( $zCells ) ";
+   
+    
+    divz1 		($z1Lratio $z1lineP $z1Ratio);
+    divz2 		($z2Lratio $z2lineP $z2Ratio);
+        
+    
+//*********************************************//
+
+
+
+
+vertices
+(
+
+//block1
+    ($x1 $y1 $zMin)
+    ($x2 $y1 $zMin)
+    ($x2 $y4 $zMin)
+    ($x1 $y4 $zMin)
+
+    ($x1 $y1 $zMax)
+    ($x2 $y1 $zMax)
+    ($x2 $y4 $zMax)
+    ($x1 $y4 $zMax)
+//block2    
+    ($x2 $y1 $zMin)
+    ($x3 $y1 $zMin)
+    ($x3 $y4 $zMin)
+    ($x2 $y4 $zMin)
+   
+		($x2 $y1 $zMax)   
+    ($x3 $y1 $zMax)
+    ($x3 $y4 $zMax)
+    ($x2 $y4 $zMax)
+    
+//block3    
+    ($x3 $y1 $zMin)
+    ($x4 $y1 $zMin)
+    ($x4 $y4 $zMin)
+    ($x3 $y4 $zMin)
+    
+    ($x3 $y1 $zMax)
+    ($x4 $y1 $zMax)
+    ($x4 $y4 $zMax)
+    ($x3 $y4 $zMax)
+    
+);
+
+blocks
+(
+    //block1
+    hex (0 1 2 3 4 5 6 7)
+    (
+        $x1Cells
+        $yCells
+        $zCells
+    )
+    simpleGrading 
+    (
+     	$x1Ratio
+     	($divy1	$divy2	$divy3)
+     	($divz1	$divz2)
+     )
+     
+    //block2
+    hex (8 9 10 11 12 13 14 15)
+    (
+        $x2Cells
+        $yCells
+        $zCells
+    )
+    simpleGrading
+    (
+     	$x2Ratio
+     	($divy1	$divy2	$divy3)
+     	($divz1	$divz2)
+     	
+     )
+
+    //block3
+    hex (16 17 18 19 20 21 22 23)
+    (
+        $x3Cells
+        $yCells
+        $zCells
+    )
+    simpleGrading
+    (
+     	$x3Ratio
+     	($divy1	$divy2	$divy3)
+     	($divz1	$divz2)
+     ) 
+
+    
+);
+
+edges
+(
+);
+
+boundary
+(
+    $W_boundary
+    {
+        type patch;
+        faces
+        (
+            (0 3 7 4)
+        );
+    }
+
+    $E_boundary
+    {
+        type patch;
+        faces
+        (
+            (17 21 22 18)
+        );
+    }
+    
+    $S_boundary
+    {
+        type patch;
+        faces
+        (
+            (0 4 5 1)
+            (8 12 13 9)
+            (16 20 21 17)   
+           
+        );
+    }
+
+    $N_boundary
+    {
+        type patch;
+        faces
+        (
+            (3 2 6 7)
+            (11 10 14 15)
+            (19 18 22 23)
+            
+        );
+    }
+
+    bottom_1
+    {
+        type wall;
+        faces
+        (
+            (0 1 2 3)
+        );
+    }
+    
+    bottom_2
+    {
+        type wall;
+        faces
+        (
+            (8 9 10 11)
+        );
+    }
+    
+    bottom_3
+    {
+        type wall;
+        faces
+        (
+            (16 17 18 19)
+        );
+    }
+
+    top	
+    {        type patch;
+        faces
+        (            
+            (4 7 6 5) 
+            (12 15 14 13)
+            (20 23 22 21)
+        );
+    }
+    
+    patch1_1
+    {
+        type patch;
+        faces
+        (
+            (1 5 6 2)
+        );
+    }
+    
+    patch2_0
+    {
+        type patch;
+        faces
+        (
+            (11 15 12 8)
+        );
+    }
+    
+    patch2_1
+    {
+        type patch;
+        faces
+        (
+            (13 14 10 9)
+        );
+    }
+    
+    patch3_0
+    {
+        type patch;
+        faces
+        (
+            (23 20 16 19)
+        );
+    }
+    
+
+);
+
+mergePatchPairs
+(
+(patch1_1 patch2_0)
+(patch2_1 patch3_0)
+
+);
+
+//#calc " Info << $bataZ1 << endl ";
+//#calc " Info << $bataZ2 << endl ";
+//#calc " Info << $z1Lratio << endl ";
+
+// ************************************************************************* //

@@ -1,0 +1,258 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2112                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      sampleDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// 定義採樣類型，例如 sets 或 surfaces
+type sets; // 或 surfaces
+
+libs ("libsampling.so"); // 使用的庫
+
+// 插值方式
+interpolationScheme cellPoint; // 可選：cellPoint、cellPointFace 等
+
+// 輸出格式
+setFormat raw; // 可選格式：csv、vtk、raw 等
+
+// 要採樣的物理場
+fields
+(
+    p       // 壓力場
+    U       // 速度場
+    k
+);
+
+// 幾何區域定義，例如線或點
+sets
+(
+    lidar1
+    {
+        type        uniform;
+        axis        z;
+        start       ( -132  20   0.);
+        end         ( -132  20 500.);
+        nPoints	    101;
+    } 
+    lidar2
+    {
+        type        uniform;
+        axis        z;
+        start       (  160	-92   0.);
+        end         (  160	-92 500.);
+        nPoints	    101;
+    } 
+    point1
+    {
+        type        uniform;
+        axis        z;
+        start       (-117.4	14.4   0.);
+        end         (-117.4	14.4 500.);
+        nPoints	    101;
+    } 
+    point2
+    {
+        type        uniform;
+        axis        z;
+        start       (-102.8	8.8   0.);
+        end         (-102.8	8.8 500.);
+        nPoints	    101;
+    } 
+    point3
+    {
+        type        uniform;
+        axis        z;
+        start       ( -88.2	3.2   0.);
+        end         ( -88.2	3.2 500.);
+        nPoints	    101;
+    } 
+    point4
+    {
+        type        uniform;
+        axis        z;
+        start       ( -73.6	-2.4   0.);
+        end         ( -73.6	-2.4 500.);
+        nPoints	    101;
+    } 
+    point5
+    {
+        type        uniform;
+        axis        z;
+        start       ( -59.0	-8.0   0.);
+        end         ( -59.0	-8.0 500.);
+        nPoints	    101;
+    } 
+    point6
+    {
+        type        uniform;
+        axis        z;
+        start       ( -44.4	-13.6   0.);
+        end         ( -44.4	-13.6 500.);
+        nPoints	    101;
+    } 
+    point7
+    {
+        type        uniform;
+        axis        z;
+        start       ( -29.8	-19.2   0.);
+        end         ( -29.8	-19.2 500.);
+        nPoints	    101;
+    } 
+    point8
+    {
+        type        uniform;
+        axis        z;
+        start       ( -15.2	-24.8   0.);
+        end         ( -15.2	-24.8 500.);
+        nPoints	    101;
+    } 
+    point9
+    {
+        type        uniform;
+        axis        z;
+        start       ( -0.6	-30.4   0.);
+        end         ( -0.6	-30.4 500.);
+        nPoints	    101;
+    } 
+    point10
+    {
+        type        uniform;
+        axis        z;
+        start       (  14.0	-36.0   0.);
+        end         (  14.0	-36.0 500.);
+        nPoints	    101;
+    } 
+    point11
+    {
+        type        uniform;
+        axis        z;
+        start       ( 28.6	-41.6   0.);
+        end         ( 28.6	-41.6 500.);
+        nPoints	    101;
+    } 
+    point12
+    {
+        type        uniform;
+        axis        z;
+        start       (  43.2	-47.2   0.);
+        end         (  43.2	-47.2 500.);
+        nPoints	    101;
+    } 
+    point13
+    {
+        type        uniform;
+        axis        z;
+        start       (  57.8	-52.8   0.);
+        end         (  57.8	-52.8 500.);
+        nPoints	    101;
+    } 
+    point14
+    {
+        type        uniform;
+        axis        z;
+        start       (  72.4	-58.4   0.);
+        end         (  72.4	-58.4 500.);
+        nPoints	    101;
+    } 
+    point15
+    {
+        type        uniform;
+        axis        z;
+        start       (  87.0	-64.0   0.);
+        end         (  87.0	-64.0 500.);
+        nPoints	    101;
+    } 
+    point16
+    {
+        type        uniform;
+        axis        z;
+        start       ( 101.6	-69.6   0.);
+        end         ( 101.6	-69.6 500.);
+        nPoints	    101;
+    } 
+    point17
+    {
+        type        uniform;
+        axis        z;
+        start       ( 116.2	-75.2   0.);
+        end         ( 116.2	-75.2 500.);
+        nPoints	    101;
+    } 
+    point18
+    {
+        type        uniform;
+        axis        z;
+        start       ( 130.8	-80.8   0.);
+        end         ( 130.8	-80.8 500.);
+        nPoints	    101;
+    } 
+    point19
+    {
+        type        uniform;
+        axis        z;
+        start       ( 145.4	-86.4   0.);
+        end         ( 145.4	-86.4 500.);
+        nPoints	    101;
+    } 
+    inflow_C
+    {
+        type        uniform;
+        axis        z;
+        start       ( 1850.0	0   0.);
+        end         ( 1850.0	0 500.);
+        nPoints	    101;
+    } 
+    inflow_N
+    {
+        type        uniform;
+        axis        z;
+        start       ( 1850.0	130   0.);
+        end         ( 1850.0	130 500.);
+        nPoints	    101;
+    } 
+    inflow_S
+    {
+        type        uniform;
+        axis        z;
+        start       ( 1850.0	-130   0.);
+        end         ( 1850.0	-130 500.);
+        nPoints	    101;
+    } 
+    outflow_C
+    {
+        type        uniform;
+        axis        z;
+        start       ( 200.0	0   0.);
+        end         ( 200.0	0 500.);
+        nPoints	    101;
+    } 
+    outflow_N
+    {
+        type        uniform;
+        axis        z;
+        start       ( 200.0	130   0.);
+        end         ( 200.0	130 500.);
+        nPoints	    101;
+    } 
+    outflow_S
+    {
+        type        uniform;
+        axis        z;
+        start       ( 200.0	-130   0.);
+        end         ( 200.0	-130 500.);
+        nPoints	    101;
+    } 
+);
+
+
+// *********************************************************************** //

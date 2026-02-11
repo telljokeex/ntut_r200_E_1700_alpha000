@@ -1,0 +1,88 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2112                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       polyBoundaryMesh;
+    location    "constant/polyMesh";
+    object      boundary;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+10
+(
+    outlet_W
+    {
+        type            patch;
+        nFaces          3240;
+        startFace       139178873;
+    }
+    inlet_E
+    {
+        type            patch;
+        nFaces          3240;
+        startFace       139182113;
+    }
+    side_S
+    {
+        type            patch;
+        nFaces          8676;
+        startFace       139185353;
+    }
+    side_N
+    {
+        type            patch;
+        nFaces          8676;
+        startFace       139194029;
+    }
+    bottom_1
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          2922;
+        startFace       139202705;
+    }
+    bottom_2
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          444204;
+        startFace       139205627;
+    }
+    bottom_3
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          1800;
+        startFace       139649831;
+    }
+    top
+    {
+        type            patch;
+        nFaces          21690;
+        startFace       139651631;
+    }
+    buildings
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          1032868;
+        startFace       139673321;
+    }
+    upstream1700m
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          608184;
+        startFace       140706189;
+    }
+)
+
+// ************************************************************************* //
